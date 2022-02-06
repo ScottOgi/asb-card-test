@@ -25,17 +25,17 @@ export const RegisterCard: React.FC = () => {
                         label="Credit card number"
                         name="ccNumber"
                         >
-                        <Input type='number' placeholder='Credit Card Number'/>
+                        <Input type='number' placeholder='Credit Card Number' value={card?.number}/>
                     </Form.Item>
                     <Form.Item
                         label="cvc"
                         name="cvc">
-                        <Input type='number' placeholder='CVC'/>
+                        <Input type='number' placeholder='CVC' value={card?.cvc}/>
                     </Form.Item>
                     <Form.Item
                         label='Expiry'
                         name='Expiry'>
-                        <Input type='date' placeholder='Expiry'/>
+                        <Input type='date' placeholder='Expiry' value={card?.expiry}/>
                     </Form.Item>
                     <Form.Item>
                         <Button type='primary' htmlType='submit'>
