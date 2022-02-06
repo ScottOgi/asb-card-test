@@ -1,14 +1,16 @@
 import { Row, Card, Typography, Form, Input, Button } from 'antd'
+import { useContext } from 'react'
+import { StateCtx } from '../../store'
 
 export const RegisterCard: React.FC = () => {
-
+    const { name, card } = useContext(StateCtx)
 
     return (
         <Row justify='center' align='middle'>
             <Card title="Card Register" bordered={true} style={{width:500}}>
                 <Typography>
                     <Typography.Title level={2}>
-                        Welcome Scott
+                        Welcome {name}
                     </Typography.Title>
                 </Typography>
                 <Form
