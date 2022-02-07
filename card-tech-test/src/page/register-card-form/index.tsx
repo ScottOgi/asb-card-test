@@ -1,9 +1,25 @@
-import { Row, Card, Typography, Form, Input, Button } from 'antd'
+import { Row, Card, Typography, Form, Input, Button, DatePicker } from 'antd'
+import moment from 'moment'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { StateCtx } from '../../store'
+import { SUBMIT } from '../../store/action'
 
 export const RegisterCard: React.FC = () => {
-    const { name, card } = useContext(StateCtx)
+    const { name, card, dispatch } = useContext(StateCtx)
+
+    const navigate = useNavigate()
+
+    const onFinish = (values:any) => {
+        dispatch({type:SUBMIT, card:{
+            number: values.ccNumber,
+            cvc: values.cvc,
+            expiry: values.expiry
+        }})
+        navigate("../registered", { replace: true })
+    }
+
+    const expiryFormat = 'YYYY/MM'
 
     return (
         <Row justify='center' align='middle'>
@@ -18,24 +34,30 @@ export const RegisterCard: React.FC = () => {
                     name='login-form'
                     className='login-form'
                     initialValues={{remember:true}}
-                    onFinish={(values: any) => {
-                        console.log(values)
-                    }}>
+                    onFinish={onFinish}>
                     <Form.Item
                         label="Credit card number"
                         name="ccNumber"
+                        rules={[{required: true, message: 'Please input your credit card number.'}]}
+                        initialValue={card?.number}
                         >
-                        <Input type='number' placeholder='Credit Card Number' value={card?.number}/>
+                        <Input type='number' placeholder='Credit Card Number'/>
                     </Form.Item>
                     <Form.Item
                         label="cvc"
-                        name="cvc">
-                        <Input type='number' placeholder='CVC' value={card?.cvc}/>
+                        name="cvc"
+                        rules={[{required: true, message: 'Please input your credit card security number.'}]}
+                        initialValue={card?.cvc}
+                        >
+                        <Input type='number' placeholder='CVC'/>
                     </Form.Item>
                     <Form.Item
                         label='Expiry'
-                        name='Expiry'>
-                        <Input type='date' placeholder='Expiry' value={card?.expiry}/>
+                        name='expiry'
+                        rules={[{required: true, message: 'Please input your credit card expiry.'}]}
+                        initialValue={card?.expiry}
+                        >
+                        <DatePicker defaultValue={moment()} format={expiryFormat} picker='month' />
                     </Form.Item>
                     <Form.Item>
                         <Button type='primary' htmlType='submit'>
