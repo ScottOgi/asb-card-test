@@ -1,12 +1,11 @@
-import { Row, Card, Typography, Form, Input, Button, DatePicker } from 'antd'
-import moment from 'moment'
+import { Row, Card, Typography, Form, Input, Button } from 'antd'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { StateCtx } from '../../store'
 import { SUBMIT } from '../../store/action'
 
 export const RegisterCard: React.FC = () => {
-    const { name, card, dispatch } = useContext(StateCtx)
+    const { name, cards: card, dispatch } = useContext(StateCtx)
 
     const navigate = useNavigate()
 
@@ -16,7 +15,7 @@ export const RegisterCard: React.FC = () => {
             cvc: values.cvc,
             expiry: values.expiry
         }})
-        navigate("../registered", { replace: true })
+        navigate("../MenuPage", { replace: true })
     }
 
     const expiryFormat = 'YYYY/MM'
@@ -26,7 +25,7 @@ export const RegisterCard: React.FC = () => {
             <Card title="Card Register" bordered={true} style={{width:500}}>
                 <Typography>
                     <Typography.Title level={2}>
-                        Welcome {name}
+                        Welcome {name || 'User'}
                     </Typography.Title>
                 </Typography>
                 <Form
@@ -39,7 +38,6 @@ export const RegisterCard: React.FC = () => {
                         label="Credit card number"
                         name="ccNumber"
                         rules={[{required: true, message: 'Please input your credit card number.'}]}
-                        initialValue={card?.number}
                         >
                         <Input type='number' placeholder='Credit Card Number'/>
                     </Form.Item>
@@ -47,7 +45,6 @@ export const RegisterCard: React.FC = () => {
                         label="cvc"
                         name="cvc"
                         rules={[{required: true, message: 'Please input your credit card security number.'}]}
-                        initialValue={card?.cvc}
                         >
                         <Input type='number' placeholder='CVC'/>
                     </Form.Item>
@@ -55,9 +52,8 @@ export const RegisterCard: React.FC = () => {
                         label='Expiry'
                         name='expiry'
                         rules={[{required: true, message: 'Please input your credit card expiry.'}]}
-                        initialValue={card?.expiry}
                         >
-                        <DatePicker defaultValue={moment()} format={expiryFormat} picker='month' />
+                        <Input type='text' placeholder='MM/YY' maxLength={5}/>
                     </Form.Item>
                     <Form.Item>
                         <Button type='primary' htmlType='submit'>
