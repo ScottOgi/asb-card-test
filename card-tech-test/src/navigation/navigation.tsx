@@ -10,13 +10,18 @@ const { Header, Content, Footer } = Layout
 const Navigation = () => {
     let isMenuActive = useLocation().pathname === '/'
 
+    let navStyle = {
+        color: 'black'
+    }
+
     return (
-        <Layout>
+        <Layout
+            style={{height: '100%'}}>
             <Header
                 style={{backgroundColor: 'wheat'}}>
                     { isMenuActive ? 
-                    <NavLink to={'/MenuPage'}><MenuOutlined /></NavLink> : 
-                    <NavLink to={'/'}><ArrowLeftOutlined/></NavLink> }
+                    <NavLink to={'/MenuPage'} style={navStyle}><MenuOutlined /></NavLink> : 
+                    <NavLink to={'/'} style={navStyle}><ArrowLeftOutlined/></NavLink> }
             </Header>
             <Layout>
             <Content className={css['site-layout']} style={{ padding: '0 50px', marginTop: 64 }}>
@@ -29,8 +34,8 @@ const Navigation = () => {
             </Content>
             </Layout>
             <Footer
-                style={{height:'100%'}}>
-
+                style={{ textAlign: 'center', bottom: '0px' }}>
+                Scott Ogilvie ©2022
             </Footer>
         </Layout>
     )

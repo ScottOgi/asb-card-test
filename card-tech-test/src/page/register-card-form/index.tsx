@@ -18,8 +18,6 @@ export const RegisterCard: React.FC = () => {
         navigate("../MenuPage", { replace: true })
     }
 
-    const expiryFormat = 'YYYY/MM'
-
     return (
         <Row justify='center' align='middle'>
             <Card title="Card Register" bordered={true} style={{width:500}}>
