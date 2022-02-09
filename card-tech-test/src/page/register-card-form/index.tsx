@@ -49,7 +49,7 @@ export const RegisterCard: React.FC = () => {
                     <Form.Item
                         label='Expiry'
                         name='ccExpiry'
-                        rules={[{required: true, message: 'Please input your credit card expiry.'}]}
+                        rules={[{required: true, message: 'Please input your credit card expiry.', pattern: /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/}]}
                         >
                         <Input type='text' placeholder='MM/YY' maxLength={5} required={true}/>
                     </Form.Item>

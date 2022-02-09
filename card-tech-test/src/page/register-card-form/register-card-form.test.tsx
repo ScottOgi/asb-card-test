@@ -1,5 +1,4 @@
-import { fireEvent, getAllByAltText, render } from '@testing-library/react'
-import React from 'react'
+import { fireEvent, render } from '@testing-library/react'
 import { act } from 'react-dom/test-utils'
 import { BrowserRouter } from 'react-router-dom'
 import RegisterCard from '.'
@@ -14,11 +13,9 @@ describe('Register card form', () => {
     }
 
     const state: Card = {
-
         number: 1234,
         cvc: 111,
         expiry: '03/12'
-
     }
 
     beforeEach(() => {
