@@ -25,7 +25,7 @@ export const MenuPage: React.FC = () => {
                             </Typography>
                         </Card> :
                         cards.map((card, index) => {
-                            return <Card title={"Registered Card " + ++index} bordered={true} style={{ width: 500, margin: 10 }}>
+                            return <Card title={"Registered Card " + ++index} key={index} bordered={true} style={{ width: 500, margin: 10 }}>
                                 <Typography>
                                     <Title level={4}>Number: {card.number}</Title>
                                     <Title level={4}>CVC {card.cvc}</Title>

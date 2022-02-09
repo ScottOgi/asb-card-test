@@ -37,21 +37,21 @@ export const RegisterCard: React.FC = () => {
                         name="ccNumber"
                         rules={[{required: true, message: 'Please input your credit card number.'}]}
                         >
-                        <Input type='number' placeholder='Credit Card Number' />
+                        <Input type='number' placeholder='Credit Card Number' required={true}/>
                     </Form.Item>
                     <Form.Item
                         label="cvc"
                         name="ccCvc"
                         rules={[{required: true, message: 'Please input your credit card security number.'}]}
                         >
-                        <Input type='number' placeholder='CVC'/>
+                        <Input type='number' placeholder='CVC' required={true}/>
                     </Form.Item>
                     <Form.Item
                         label='Expiry'
                         name='ccExpiry'
                         rules={[{required: true, message: 'Please input your credit card expiry.'}]}
                         >
-                        <Input type='text' placeholder='MM/YY' maxLength={5} />
+                        <Input type='text' placeholder='MM/YY' maxLength={5} required={true}/>
                     </Form.Item>
                     <Form.Item>
                         <Button type='primary' htmlType='submit'>

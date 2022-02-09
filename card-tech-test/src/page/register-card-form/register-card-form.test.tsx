@@ -1,5 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
-import { Form } from 'antd'
+import { fireEvent, getAllByAltText, render } from '@testing-library/react'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
 import { BrowserRouter } from 'react-router-dom'
@@ -57,7 +56,7 @@ describe('Register card form', () => {
     })
 
     it('should require a number in card number', async () => {
-        const { container, getAllByDisplayValue } = renderCardForm()
+        const { container } = renderCardForm()
 
         state.number = undefined
         fireInputsEvent(container, state)
@@ -65,31 +64,87 @@ describe('Register card form', () => {
         await act(async () => {
             let form = container.querySelector('#register-form')
             form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
-            Sleep(1000)
         })
-
-        expect(getAllByDisplayValue("Please input your credit card number.")).toBeTruthy()
+        
+        expect(document.getElementsByTagName("input")[0].validity.valid).toBeFalsy()
     })
 
     it('should pass a valid number in card number', async () => {
-        const { container, getAllByDisplayValue } = renderCardForm()
+        const { container } = renderCardForm()
 
+        state.number = 1234
         fireInputsEvent(container, state)
 
         await act(async () => {
             let form = container.querySelector('#register-form')
             form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
         })
+        
+        expect(document.getElementsByTagName("input")[0].validity.valid).toBeTruthy()
+    })
 
-        expect(getAllByDisplayValue("Please input your credit card number.")).toBeFalsy()
+    it('should require a cvc in card cvc', async () => {
+        const { container } = renderCardForm()
+
+        state.cvc = undefined
+        fireInputsEvent(container, state)
+
+        await act(async () => {
+            let form = container.querySelector('#register-form')
+            form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
+        })
+        
+        expect(document.getElementsByTagName("input")[1].validity.valid).toBeFalsy()
+    })
+
+    it('should pass a valid cvc number in card cvc', async () => {
+        const { container } = renderCardForm()
+
+        state.cvc = 123
+        fireInputsEvent(container, state)
+
+        await act(async () => {
+            let form = container.querySelector('#register-form')
+            form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
+        })
+        
+        expect(document.getElementsByTagName("input")[1].validity.valid).toBeTruthy()
+    })
+
+    it('should require an expiry in card expiry', async () => {
+        const { container } = renderCardForm()
+
+        state.expiry = undefined
+        fireInputsEvent(container, state)
+
+        await act(async () => {
+            let form = container.querySelector('#register-form')
+            form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
+        })
+        
+        expect(document.getElementsByTagName("input")[2].validity.valid).toBeFalsy()
+    })
+
+    it('should pass a valid expiry in card expiry', async () => {
+        const { container } = renderCardForm()
+
+        state.expiry = "12/12"
+        fireInputsEvent(container, state)
+
+        await act(async () => {
+            let form = container.querySelector('#register-form')
+            form === null ? expect(true).toBeFalsy() : fireEvent.submit(form)
+        })
+        
+        expect(document.getElementsByTagName("input")[2].validity.valid).toBeTruthy()
     })
 
     function fireInputsEvent(container: HTMLElement, parameters: Card): void {
-        const cardNumber = container.querySelector('#register-form_ccNumber')
+        const cardNumber = container.querySelector("#register-form_ccNumber")
         const cardCvc = container.querySelector('#register-form_ccCvc')
         const cardExpiry = container.querySelector('#register-form_ccExpiry')
 
-        if (cardNumber !== null ) {
+        if (cardNumber !== null) {
             fireEvent.change(cardNumber, {
                 target: { value: parameters.number }
             })
@@ -106,7 +161,3 @@ describe('Register card form', () => {
         }
     }
 })
-
-function Sleep(arg0: number) {
-    throw new Error('Function not implemented.')
-}
