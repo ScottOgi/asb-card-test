@@ -1,40 +1,42 @@
-import { Layout, Menu, Row, Col, PageHeader, Typography } from "antd"
-import { ArrowLeftOutlined, BackwardOutlined, MenuOutlined } from '@ant-design/icons'
-import { NavLink, Routes, Route, useLocation } from "react-router-dom"
+import { useState } from "react"
+import { Layout, } from "antd"
+import { ArrowLeftOutlined, MenuOutlined } from '@ant-design/icons'
+import { NavLink, Routes, Route } from "react-router-dom"
 import RegisterCard from "../page/register-card-form"
 import MenuPage from "../page/menu"
 import css from './nav-style.module.css'
 
 const { Header, Content, Footer } = Layout
 
-const Navigation = () => {
-    let isMenuActive = useLocation().pathname === '/'
+export const Navigation = () => {
+    const [isMenuActive, toggleMenu] = useState<boolean>(false)
 
-    let navStyle = {
-        color: 'black'
+    const menuToggle = () => {
+        toggleMenu(!isMenuActive)
     }
 
     return (
         <Layout
-            style={{height: '100%'}}>
-            <Header
-                style={{backgroundColor: 'wheat'}}>
-                    { isMenuActive ? 
-                    <NavLink to={'/MenuPage'} style={navStyle}><MenuOutlined /></NavLink> : 
-                    <NavLink to={'/'} style={navStyle}><ArrowLeftOutlined/></NavLink> }
+            style={{ height: '100%' }}>
+            <Header 
+                aria-label="header"
+                style={{ backgroundColor: 'wheat' }}>
+                {isMenuActive ?
+                    <NavLink aria-label="back" to={'/'} style={{ color: 'black' }} onClick={menuToggle}><ArrowLeftOutlined /></NavLink> :
+                    <NavLink to={'/MenuPage'} style={{ color: 'black' }} onClick={menuToggle}><MenuOutlined aria-label="menu" /></NavLink>}
             </Header>
             <Layout>
-            <Content className={css['site-layout']} style={{ padding: '0 50px', marginTop: 64 }}>
-                <div className={css['site-layout-background']} style={{ padding: 24, minHeight: 380 }}>
-                    <Routes>
-                        <Route path="/" element={<RegisterCard/>} />
-                        <Route path="/MenuPage" element={<MenuPage />} />
-                    </Routes>
-                </div>
-            </Content>
+                <Content aria-label="content" className={css['site-layout']} style={{ padding: '0 50px', marginTop: 64 }}>
+                    <div className={css['site-layout-background']} style={{ padding: 24, minHeight: 380 }}>
+                        <Routes>
+                            <Route path="/" element={<RegisterCard />} />
+                            <Route path="/MenuPage" element={<MenuPage />} />
+                        </Routes>
+                    </div>
+                </Content>
             </Layout>
             <Footer
-                style={{ textAlign: 'center', bottom: '0px' }}>
+                aria-label="footer" style={{ textAlign: 'center', bottom: '0px' }}>
                 Scott Ogilvie ©2022
             </Footer>
         </Layout>

@@ -12,8 +12,8 @@ export const RegisterCard: React.FC = () => {
     const onFinish = (values:any) => {
         dispatch({type:SUBMIT, card:{
             number: values.ccNumber,
-            cvc: values.cvc,
-            expiry: values.expiry
+            cvc: values.ccCvc,
+            expiry: values.ccExpiry
         }})
         navigate("../MenuPage", { replace: true })
     }
@@ -28,8 +28,8 @@ export const RegisterCard: React.FC = () => {
                 </Typography>
                 <Form
                     layout='vertical'
-                    name='login-form'
-                    className='login-form'
+                    name='register-form'
+                    className='register-form'
                     initialValues={{remember:true}}
                     onFinish={onFinish}>
                     <Form.Item
@@ -37,21 +37,21 @@ export const RegisterCard: React.FC = () => {
                         name="ccNumber"
                         rules={[{required: true, message: 'Please input your credit card number.'}]}
                         >
-                        <Input type='number' placeholder='Credit Card Number'/>
+                        <Input type='number' placeholder='Credit Card Number' />
                     </Form.Item>
                     <Form.Item
                         label="cvc"
-                        name="cvc"
+                        name="ccCvc"
                         rules={[{required: true, message: 'Please input your credit card security number.'}]}
                         >
                         <Input type='number' placeholder='CVC'/>
                     </Form.Item>
                     <Form.Item
                         label='Expiry'
-                        name='expiry'
+                        name='ccExpiry'
                         rules={[{required: true, message: 'Please input your credit card expiry.'}]}
                         >
-                        <Input type='text' placeholder='MM/YY' maxLength={5}/>
+                        <Input type='text' placeholder='MM/YY' maxLength={5} />
                     </Form.Item>
                     <Form.Item>
                         <Button type='primary' htmlType='submit'>
